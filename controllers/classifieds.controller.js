@@ -1,6 +1,6 @@
 angular.module("ngClassifieds")
 
-.controller("classifiedsCtrl", function($scope, $http, classifiedsFactory){
+.controller("classifiedsCtrl", function($scope, $http, classifiedsFactory, $mdSidenav){
 	
 	/*
 		POST	- sending data
@@ -9,13 +9,19 @@ angular.module("ngClassifieds")
 		DELETE	- deleting datas
 	*/
 	classifiedsFactory.getClassifieds().then(function(classifieds){
-		
-		console.log(classifieds);
-		
 		$scope.classifieds = classifieds.data;
-
-		console.log(classifieds.data[0]);
 	});
+
+	// open side bar function 
+	$scope.openSidebar = function(){
+		$mdSidenav('left').open();
+	}
+
+	// open side bar function 
+	$scope.closeSidebar = function(){
+		$mdSidenav('left').close();
+	}
+ 
 
 	
 });
