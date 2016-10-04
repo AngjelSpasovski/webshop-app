@@ -1,6 +1,6 @@
 angular.module("ngClassifieds")
 
-.controller("classifiedsCtrl", function($scope, $http){
+.controller("classifiedsCtrl", function($scope, $http, classifiedsFactory){
 	
 	/*
 		POST	- sending data
@@ -8,7 +8,7 @@ angular.module("ngClassifieds")
 		PUT		- editing data
 		DELETE	- deleting datas
 	*/
-	$http.get("data/classifieds.json").then(function(classifieds){
+	classifiedsFactory.getClassifieds().then(function(classifieds){
 		
 		console.log(classifieds);
 		
