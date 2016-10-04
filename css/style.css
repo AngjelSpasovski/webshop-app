@@ -1,0 +1,6 @@
+button .material-icons {
+	margin-top: 7px;
+}
+.flex-30, .layout-row>.flex-30 {
+	max-height: none;
+}
