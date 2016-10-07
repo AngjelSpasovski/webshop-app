@@ -31,16 +31,33 @@ angular.module("ngClassifieds")
 			$scope.classifieds.push(classified);	// push the data
 			$scope.classified = {};					// empty the fields 
 			$scope.closeSidebar();					// close the slide nav function
-			// message
-			$mdToast.show(
-				$mdToast.simple()
-						.content("Classified saved!")
-						.position('top, right')
-						.hideDelay(3000)
-			);
+			showToast("Classifieds saved!");	
 		}
 	}
- 
+ 	
+ 	// edit values in side bar 
+ 	// and tuck the data from clicked area
+ 	$scope.editClassified = function(classifidForEditing){
+ 		$scope.editing = true;						// set value true for editing
+ 		$scope.openSidebar();						// open the side nav function
+ 		$scope.classified = classifidForEditing;	
+ 	}
 
-	
+ 	// save the editing
+ 	$scope.saveEdit = function(){
+ 		$scope.editing = false;						// close the editing
+ 		$scope.classified = {};						// empty the fields 
+ 		$scope.closeSidebar();						// close the slide nav function
+ 		showToast("Edit classified!");
+ 	}
+
+	// global function for messaging 
+	function showToast(message){
+		$mdToast.show(
+			$mdToast.simple()
+					.content(message)
+					.position('top, right')
+					.hideDelay(3000)
+		);
+	}
 });
