@@ -13,6 +13,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
 
 	<!-- App -->
 	<script src="app/app.js"></script>
@@ -28,16 +29,49 @@
 	<md-toolbar>
 		<div class="md-toolbar-tools">
 			<p><strong>ngClassifieds</strong></p>
-			<!-- buttons -->
+			<!-- Open Side bar button -->
 			<md-button ng-click="openSidebar()">
 				<md-icon class="mdi mdi-plus-circle"></md-icon>
 				New Classified
 			</md-button>
+
+			<!-- Search -->
+			<md-button ng-click="showFilters = true">
+				<md-icon class="mdi mdi-magnify"></md-icon>
+				Filters
+			</md-button>
 		</div>
 	</md-toolbar><!-- end-md-toolbar -->
 
+	<!-- Search -->
+	<div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
+		
+		<!-- Search field -->
+		<div class="marginSearchContainer">
+			<md-input-container>
+				<label>Enter Search Term</label>
+				<input type="text" ng-model="classifiedsFilter">
+			</md-input-container>
+		</div>
+		
+		<!-- Dropdown -->
+		<div>
+			<md-input-container>
+				<label>Categry</label>
+				<md-select ng-model="selectedCategory">
+		    		<md-option ng-value="category" ng-repeat="category in categories">{{ category }}</md-option>
+		  		</md-select>
+	  		</md-input-container>
+  		</div>
+
+  		<div layout="row">
+				<md-button class="md-warn" ng-click="clearSearch()">Clear</md-button>
+  		</div>
+
+	</div>
+
 	<!-- Input filds data -->
-	<md-sidenav class="md-slidenav-left md-whiteframe-z2" md-component-id="left"><!-- md-is-locked-open="true" -->
+	<md-sidenav class="md-slidenav-left md-whiteframe-z2" md-component-id="left"><!-- md-is-locked-open="true" // otvoren celo vreme -->
 		<md-toolbar>
 			<h1 class="md-toolbar-tools">Add a classified</h1>
 		</md-toolbar>
@@ -91,7 +125,9 @@
 	<md-content class="md-padding" layout="row" layout-wrap>
 		
 		<!-- Card -->
-		<md-card ng-repeat="classified in classifieds" flex="30">
+		<md-card ng-repeat="classified in classifieds 	| filter: classifiedsFilter
+														| filter: selectedCategory"
+														flex = "30"	class = "classifiedCard">
 			<img ng-src="{{ classified.image }}">
 			
 			<!-- Card content -->

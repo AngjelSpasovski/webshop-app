@@ -4,3 +4,27 @@ button .material-icons {
 .flex-30, .layout-row>.flex-30 {
 	max-height: none;
 }
+
+.marginSearchContainer {
+	margin-top: 24px;
+}
+
+/*ANIMATION*/
+
+/*.classifiedCard.ng-enter, .classifiedCard.ng-move {
+	transition: 0.4s all;
+	opacity: 0;
+}
+
+.classifiedCard.ng-enter..ng-enter-active, .classifiedCard.ng-move.ng-move-active {
+	opacity: 1;
+}
+
+.classifiedCard.ng-leave {
+	animation: 0.4s fade_classifiedCard
+}
+
+@keyframes fade_classifiedCard {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}*/

@@ -5,6 +5,7 @@ angular.module("ngClassifieds")
 	// call the service GET function
 	classifiedsFactory.getClassifieds().then(function(classifieds){
 		$scope.classifieds = classifieds.data;
+		$scope.categories = getCategories($scope.classifieds);
 	});
 
 	var contact = {														// static contact object data that faking user profile info
@@ -68,6 +69,11 @@ angular.module("ngClassifieds")
  		});
  	}
 
+ 	// clear the searches
+ 	$scope.clearSearch = function(){
+ 		$scope.classifiedsFilter = "";
+ 		$scope.selectedCategory	= "";
+ 	}
 
 	// global function for messaging 
 	function showToast(message){
@@ -77,5 +83,21 @@ angular.module("ngClassifieds")
 					.position('top, right')
 					.hideDelay(3000)
 		);
+	}
+
+	// global function for getting categories
+	function getCategories(classifieds){
+		// arrey
+		var categories = [];
+
+		// loops
+		angular.forEach(classifieds, function(item){
+			angular.forEach(item.categories, function(category){
+				categories.push(category);
+			});
+		});
+
+		// unique categories
+		return _.uniq(categories);
 	}
 });
