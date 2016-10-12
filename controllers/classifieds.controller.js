@@ -1,11 +1,24 @@
 angular.module("ngClassifieds")
 
-.controller("classifiedsCtrl", function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
+.controller("classifiedsCtrl", function($scope, $http, $state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog){
 	
+	var vm = this;
+	vm.openSidebar = openSidebar;
+	vm.closeSidebar = closeSidebar;
+	vm.saveClassified = saveClassified;
+	vm.editClassified = editClassified;
+	vm.saveEdit = saveEdit;
+	vm.deleteClassified = deleteClassified;
+
+	vm.classifieds;
+	vm.categories;
+	vm.editing;
+	vm.classified;
+
 	// call the service GET function
 	classifiedsFactory.getClassifieds().then(function(classifieds){
-		$scope.classifieds = classifieds.data;
-		$scope.categories = getCategories($scope.classifieds);
+		vm.classifieds = classifieds.data;
+		vm.categories = getCategories(vm.classifieds);
 	});
 
 	var contact = {														// static contact object data that faking user profile info
@@ -15,45 +28,45 @@ angular.module("ngClassifieds")
 	}
 
 	// open side bar function 
-	$scope.openSidebar = function(){
-		$mdSidenav('left').open();										// open the slide nav
+	function openSidebar(){
+		$state.go('classifieds.new');									// navigate to the URI classifieds/new state
 	}
 
 	// close side bar function 
-	$scope.closeSidebar = function(){
+	function closeSidebar(){
 		$mdSidenav('left').close();										// close the slide nav
-		$scope.classified = {};											// empty the fields
+		vm.classified = {};											// empty the fields
 	}
 
 	// save side bar function
-	$scope.saveClassified = function(classifiedData){
+	function saveClassified(classifiedData){
 		if(classifiedData){												// if is true (have data in object)
 			classifiedData.contact = contact;							// send values from static object
-			$scope.classifieds.push(classifiedData);					// push the data
-			$scope.classified = {};										// empty the fields 
-			$scope.closeSidebar();										// close the slide nav function
+			vm.classifieds.push(classifiedData);					// push the data
+			vm.classified = {};										// empty the fields 
+			closeSidebar();										// close the slide nav function
 			showToast("Classifieds saved!");	
 		}
 	}
  	
  	// edit values in side bar 
  	// and tuck the data from clicked area
- 	$scope.editClassified = function(classifidForEditing){
- 		$scope.editing = true;											// set value true for editing
- 		$scope.openSidebar();											// open the side nav function
- 		$scope.classified = classifidForEditing;						// the model get the edited value
+ 	function editClassified(classified){
+ 		vm.editing = true;											// set value true for editing
+ 		openSidebar();											// open the side nav function
+ 		vm.classified = classified;								// the model get the edited value
  	}
 
  	// save the editing
- 	$scope.saveEdit = function(){
- 		$scope.editing = false;											// close the editing
- 		$scope.classified = {};											// empty the fields 
- 		$scope.closeSidebar();											// close the slide nav function
+ 	function saveEdit(){
+ 		vm.editing = false;											// close the editing
+ 		vm.classified = {};											// empty the fields 
+ 		closeSidebar();											// close the slide nav function
  		showToast("Edit classified!");
  	}
 
  	// delete the item
- 	$scope.deleteClassified = function(event, classifiedForDelete){
+ 	function deleteClassified(event, classifiedForDelete){
  		var confirm = $mdDialog.confirm()
  								.title("Are you sure want to delete " + classifiedForDelete.title + " ?")
  								.ok("Yes")
@@ -62,17 +75,11 @@ angular.module("ngClassifieds")
 
  		// promise when the dialog is confirmed then to delete the item
  		$mdDialog.show(confirm).then(function(){
- 			var index = $scope.classifieds.indexOf(classifiedForDelete);	// index gets the index from classifiedForDelete object
- 			$scope.classifieds.splice(index, 1);							// pass the index and splice one item
+ 			var index = vm.classifieds.indexOf(classifiedForDelete);	// index gets the index from classifiedForDelete object
+ 			vm.classifieds.splice(index, 1);							// pass the index and splice one item
  		}, function(){
  			console.log("you change your mind, thanks :) ");
  		});
- 	}
-
- 	// clear the searches
- 	$scope.clearSearch = function(){
- 		$scope.classifiedsFilter = "";
- 		$scope.selectedCategory	= "";
  	}
 
 	// global function for messaging 
