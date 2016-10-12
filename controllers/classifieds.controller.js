@@ -21,6 +21,13 @@ angular.module("ngClassifieds")
 		vm.categories = getCategories(vm.classifieds);
 	});
 
+	// whow the emiting object from child controller
+	$scope.$on("newClassified", function(event, classified){
+		classified.id = vm.classifieds.length + 1;
+		vm.classifieds.push(classified);
+		showToast("Classified Saved!");
+	})
+
 	var contact = {														// static contact object data that faking user profile info
 		name:" Angjel Spasovski",
 		phone:"222-333-555",

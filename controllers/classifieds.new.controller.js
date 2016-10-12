@@ -4,6 +4,7 @@ angular.module("ngClassifieds")
 	var vm = this;
 
 	vm.closeSidebar = closeSidebar;
+	vm.saveClassified = saveClassified;
 	vm.sidenavOpen;
 
 	$timeout(function(){
@@ -22,4 +23,16 @@ angular.module("ngClassifieds")
 		vm.sidenavOpen = false;
 	}
 	
+	function saveClassified(classified){
+		if(classified){
+			classified.contact = {														// static contact object data that faking user profile info
+				name:" Angjel Spasovski",
+				phone:"222-333-555",
+				email:"angjel.spasovski@yahoo.com"
+			}
+
+			$scope.$emit("newClassified", classified);
+			vm.sidenavOpen = false;
+		}
+	}
 })
