@@ -28,13 +28,17 @@ angular.module("ngClassifieds")
 		showToast("Classified Saved!");
 	})
 
+	$scope.$on("editSaved", function(event, message){
+		showToast(message);
+	})
+
 	var contact = {														// static contact object data that faking user profile info
 		name:" Angjel Spasovski",
 		phone:"222-333-555",
 		email:"angjel.spasovski@yahoo.com"
 	}
 
-	// open side bar function 
+	// open side bar
 	function openSidebar(){
 		$state.go('classifieds.new');									// navigate to the URI classifieds/new state
 	}
@@ -56,12 +60,13 @@ angular.module("ngClassifieds")
 		}
 	}
  	
- 	// edit values in side bar 
- 	// and tuck the data from clicked area
- 	function editClassified(classified){
- 		vm.editing = true;											// set value true for editing
- 		openSidebar();											// open the side nav function
- 		vm.classified = classified;								// the model get the edited value
+ 	// open side bar
+ 	function editClassified(classifiedData){
+ 		$state.go('classifieds.edit', {						// navigate to the URI classifieds/edit state
+ 			id: classifiedData.id,								// with URL paremeters
+ 			classified: classifiedData						// pass throug classified object on edit click
+ 		});													
+
  	}
 
  	// save the editing

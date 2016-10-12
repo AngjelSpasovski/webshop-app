@@ -9,7 +9,6 @@ angular.module('ngClassifieds', ['ngMaterial','ui.router'])
 		.primaryPalette('teal')
 		.accentPalette('orange');
 
-	// 
 	$stateProvider
 	.state('classifieds', {
 		url: '/classifieds'
@@ -22,9 +21,11 @@ angular.module('ngClassifieds', ['ngMaterial','ui.router'])
 		, controller: 'newClassifiedsCtrl as vm'
 	})
 	.state('classifieds.edit', {
-		url: '/edit' // /:id
+		url: '/edit/:id' 
 		, templateUrl: 'templates/classifieds.edit.template.html'
-		, controller: 'editClassifiedsCtrl'
-		/*, params: {	classifieds: null }*/
+		, controller: 'editClassifiedsCtrl as vm'
+		, params: {	
+			classified: null 
+		}
 	})
 })

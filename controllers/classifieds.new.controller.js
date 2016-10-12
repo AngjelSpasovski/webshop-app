@@ -1,6 +1,6 @@
 angular.module("ngClassifieds")
 
-.controller("newClassifiedsCtrl", function($scope, $mdSidenav, $state, $mdDialog, $timeout, classifiedsFactory){
+.controller("newClassifiedsCtrl", function($scope, $mdSidenav, $state, $mdDialog, $timeout){
 	var vm = this;
 
 	vm.closeSidebar = closeSidebar;
